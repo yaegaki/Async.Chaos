@@ -5,7 +5,7 @@ namespace Async.Chaos
     public class ChaosWaitTaskAwaiter<TResult, TContinuationResult> : IChaosContinuationConsumer<TContinuationResult>, IChaosAwaiter<TResult>
     {
         private ChaosTask<TResult> task;
-        public bool IsCompleted => task.IsCompleted;
+        public bool IsCompleted => false;
 
         public ChaosWaitTaskAwaiter(ChaosTask<TResult> task) => this.task = task;
 
