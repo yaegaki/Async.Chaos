@@ -21,12 +21,6 @@ namespace Async.Chaos
         private static readonly MethodInfo MemberwiseCloneInfo = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
         private static TStateMachine CloneStateMachine<TStateMachine>(TStateMachine stateMachine) => (TStateMachine)MemberwiseCloneInfo.Invoke(stateMachine, Array.Empty<object>());
 
-        public static List<IAsyncStateMachine> stateMachines = new List<IAsyncStateMachine>();
-        public static object getstatemachinestate(object s)
-        {
-            return s.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)[0].GetValue(s);
-        }
-
         public void Start<TStateMachine>(ref TStateMachine stateMachine)
             where TStateMachine : IAsyncStateMachine
             => stateMachine.MoveNext();
@@ -61,7 +55,6 @@ namespace Async.Chaos
                                 continuation = () =>
                                 {
                                     var _clonedStateMachine = clonedStateMachine;
-                                    stateMachines.Add(_clonedStateMachine);
                                     clonedStateMachine = CloneStateMachine(_clonedStateMachine);
                                     prepare();
                                     _clonedStateMachine.MoveNext();
